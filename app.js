@@ -16,11 +16,11 @@ app.set('view engine', 'hjs');
 
 app.use(favicon());
 app.use(logger('dev'));
+app.use(bodyParser({limit: '100mb'}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use('/', routes);
 app.use('/users', users);
 

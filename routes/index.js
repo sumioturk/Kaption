@@ -1,9 +1,60 @@
 var express = require('express');
 var router = express.Router();
+var fs = require('fs');
+var crypto = require('crypto');
+var Flake = require('flake-idgen');
+var idGen = new Flake;
+var bigint = require('biguint-format');
 
 /* GET home page. */
-router.get('/', function(req, res) {
-  res.render('index', { title: 'Express' });
+router.get('/', function (req, res) {
+    res.render('index', { title: 'Express' });
+});
+
+router.post('/image', function (request, response) {
+    console.log(request.body);
+    var http = require('http');
+    var request = http.get(request.body.url, function (res) {
+        var imagedata = '';
+        res.setEncoding('binary');
+        res.on('data', function (chunk) {
+            imagedata += chunk
+        });
+        res.on('end', function () {
+            var hash = crypto.createHash('md5');
+            hash.setEncoding('utf-8');
+            hash.update(imagedata);
+            var id = hash.digest('hex');
+            var name = hash.read();
+            fs.writeFile('./public/images/' + id, imagedata, 'binary', function (err) {
+                if (err) {
+                    response.json({err: err});
+                }
+                var genUrl = 'http://' + 'localhost:3000' + '/images/' + id;
+                console.log(genUrl);
+                response.json({url: genUrl});
+            });
+        });
+
+    })
+});
+
+router.post('/upload/image', function (request, response) {
+    console.log(request.host);
+    var imagedataString = request.body.url.replace(/.+base64,/, "");
+    var hash = crypto.createHash('md5');
+    hash.setEncoding('utf-8');
+    hash.update(imagedataString);
+    var hashHex = hash.digest('hex');
+    var imageDataBuffer = new Buffer(imagedataString, 'base64');
+    fs.writeFile('./public/images/' + hashHex + '.png', imageDataBuffer, 'binary', function (err) {
+        if (err) {
+            response.json({err: err})
+        }
+        var resUrl = "http://" + request.host + ":3000/images/" + hashHex + '.png';
+        console.log(resUrl);
+        response.json({url: resUrl});
+    });
 });
 
 module.exports = router;
