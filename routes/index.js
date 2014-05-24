@@ -5,6 +5,7 @@ var crypto = require('crypto');
 var Flake = require('flake-idgen');
 var idGen = new Flake;
 var bigint = require('biguint-format');
+var hostName = 'phimosis.dix.asia';
 
 /* GET home page. */
 router.get('/', function (req, res) {
@@ -30,7 +31,7 @@ router.post('/image', function (request, response) {
                 if (err) {
                     response.json({err: err});
                 }
-                var genUrl = 'http://' + 'localhost:3000' + '/images/' + id;
+                var genUrl = 'http://' + hostName + '/images/' + id;
                 console.log(genUrl);
                 response.json({url: genUrl});
             });
@@ -51,7 +52,7 @@ router.post('/upload/image', function (request, response) {
         if (err) {
             response.json({err: err})
         }
-        var resUrl = "http://" + request.host + ":3000/images/" + hashHex + '.png';
+        var resUrl = "http://" + hostName + "/images/" + hashHex + '.png';
         console.log(resUrl);
         response.json({url: resUrl});
     });

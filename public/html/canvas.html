@@ -183,7 +183,7 @@ function onAdd() {
         x: 100,
         y: 100,
         fill: color,
-        fontSize: 50,
+        fontSize: 16,
         text: input,
         padding: 10
     });
@@ -407,14 +407,12 @@ function onSave() {
     <input type="text"
            value="http://www.cuzzsoft.com/wallpaper/1280x800-11285-best-car-backgrounds-lambo.jpg"
            class="textbox" style="font-family: Arial;" onchange="onUrl()" id="url">
-    <button type="button" class="css_btn_class" id="addImage">+</button>
+    <button type="button" class="css_btn_class" id="addImage">load url</button>
 </div>
 <div style="width: auto; height:auto;">
     <input type="text" class="textbox" onchange="onChange()" id="text">
-    <button type="button" class="css_btn_class" id="add" onclick="onAdd()">+</button>
-    <button type="button" class="css_btn_class" id="twitter" onclick="onSave()">share</button>
-    <button>
-        <select id="color" name="color" class="selector">
+    <button type="button" class="css_btn_class" id="add" onclick="onAdd()">add text</button>
+<select id="color" name="color" class="selector">
             <option value="red">Red</option>
             <option value="blue">Blue</option>
             <option value="white">White</option>
@@ -432,6 +430,8 @@ function onSave() {
             <option value="Six Caps">Six Caps</option>
             <option value="Lobster">Lobster</option>
         </select>
+    <button type="button" class="css_btn_class" id="twitter" onclick="onSave()">share this shit</button>
+        
 </div>
 </body>
 </html>
