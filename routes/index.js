@@ -3,9 +3,7 @@ var router = express.Router();
 var fs = require('fs');
 var crypto = require('crypto');
 var Flake = require('flake-idgen');
-var idGen = new Flake;
-var bigint = require('biguint-format');
-var hostName = 'phimosis.dix.asia';
+var config = require('../config');
 
 /* GET home page. */
 router.get('/', function (req, res) {
@@ -31,7 +29,7 @@ router.post('/image', function (request, response) {
                 if (err) {
                     response.json({err: err});
                 }
-                var genUrl = 'http://' + hostName + '/images/' + id;
+                var genUrl = 'http://' + config.serverHostName + ':' + config.serverPortNumber +'/images/' + id;
                 console.log(genUrl);
                 response.json({url: genUrl});
             });
@@ -52,7 +50,7 @@ router.post('/upload/image', function (request, response) {
         if (err) {
             response.json({err: err})
         }
-        var resUrl = "http://" + hostName + "/images/" + hashHex + '.png';
+        var resUrl = "http://" + config.serverHostName + ':' + config.serverPortNumber + "/images/" + hashHex + '.png';
         console.log(resUrl);
         response.json({url: resUrl});
     });
