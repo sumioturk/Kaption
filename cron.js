@@ -8,7 +8,7 @@ var doJob = function () {
         console.error(list);
         list.forEach(function (file) {
             fs.stat('./public/images/' + file, function (ferr, stat) {
-                if (Date.parse(stat.mtime) < Date.now()) {
+                if (Date.parse(stat.mtime) + 60000 < Date.now()) {
                     fs.unlink('./public/images/' + file, function (e) {
                         if (e) console.log("failed to delete " + e);
                         console.log('deleted ' + file);
@@ -20,7 +20,7 @@ var doJob = function () {
 };
 
 var job = new CronJob({
-    cronTime: "*/5 * * * *",
+    cronTime: "*/1 * * * *",
     onTick: function () {
         doJob();
     },

@@ -6,7 +6,7 @@ var Flake = require('flake-idgen');
 var config = require('../config');
 
 /* GET home page. */
-router.get('/', function (req, res) {
+router.get('/kaption', function (req, res) {
     console.log(req.query.url);
     res.render('test', { url: req.query.url});
 });

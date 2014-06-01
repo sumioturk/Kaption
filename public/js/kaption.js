@@ -31,7 +31,9 @@ function Kaption(config) {
             font: textConfig.font,
             fontSize: textConfig.fontSize,
             color: textConfig.color,
-            onFocus: textConfig.onFocus
+            onFocus: textConfig.onFocus,
+            x: textConfig.x,
+            y: textConfig.y
         });
     }
 
