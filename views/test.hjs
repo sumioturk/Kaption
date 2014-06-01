@@ -1,0 +1,273 @@
+<head>
+    <script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet"/>
+    <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+    <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v5.0.2.min.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+    <script type="text/javascript" src="./js/kaption.js"></script>
+    <script type="text/javascript" src="./js/spectrum.js"></script>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css">
+    <link rel="stylesheet" href="./css/jquery.simplecolorpicker.css">
+    <link rel="stylesheet" href="./css/jquery.simplecolorpicker-regularfont.css">
+    <link rel="stylesheet" href="./css/jquery.simplecolorpicker-glyphicons.css">
+    <link rel="stylesheet" href="./css/jquery.simplecolorpicker-fontawesome.css">
+    <script src="./js/jquery.simplecolorpicker.js"></script>
+
+    <script type="text/css">
+
+
+    </script>
+
+
+    <script>
+        WebFont.load({
+            google: {
+                families: ['Droid Sans', 'Six Caps', 'Permanent Marker', 'Rock Salt', 'Sanchez', 'Lobster', 'Playball']
+            }
+        });
+    </script>
+    <script type="text/javascript">
+        var Kinetic;
+        var Kaption;
+        var focusedKaption;
+        function adjustMargin() {
+            var h = $('#navbar').height();
+            $('#margin').height(h + 8);
+            console.log(h);
+        }
+
+        $(window).ready(function () {
+            adjustMargin();
+
+            $('select[name="colorpicker-glyphicons"]').simplecolorpicker({
+                theme: 'glyphicons'
+            });
+
+            $('#picker_container').hide();
+
+            $("#newText").bind("change paste keyup", function () {
+                var text = $('#newText').val();
+                if (focusedKaption) {
+                    focusedKaption.changeText(text);
+                }
+            });
+
+            $('#addText').click(function () {
+                console.log($('#newText').val());
+                Kaption.onAddText({
+                    x: 0,
+                    y: 0,
+                    text: $('#newText').val(),
+                    color: 'white',
+                    fontSize: 80,
+                    font: 'Six Caps',
+                    onFocus: function (text) {
+                        console.log("callback: " + text);
+                        $('#newText').val(text.getText());
+                        focusedKaption = text;
+                    }
+                });
+            });
+
+            Kaption = new Kaption({
+                container: 'container',
+                width: window.innerWidth,
+                height: window.innerHeight / 4 * 3,
+                boundaryColor: 'yellow',
+                boundaryStrokeWidth: 40,
+                onImageLoaded: function () {
+                    $('#loading').hide();
+                }
+            });
+            Kaption.onAddImage("{{url}}");
+        });
+
+        function changeAlign(align) {
+            if (focusedKaption) {
+                focusedKaption.changeAlignment(align);
+            }
+        }
+
+        function changeFont(font) {
+            if (focusedKaption) {
+                focusedKaption.changeFont(font);
+            }
+        }
+
+        function upSize() {
+            if (focusedKaption) {
+                focusedKaption.changeSize(12);
+            }
+        }
+
+        function downSize() {
+            if (focusedKaption) {
+                focusedKaption.changeSize(-12);
+            }
+        }
+
+        function shareKaption() {
+            if (Kaption) {
+                $('#loading').show();
+                Kaption.export(function (url) {
+                    window.open("http://twitter.com/share?text=Kaption&url=" + url, 'share', 'height=320, width=480');
+                    $('#loading').hide();
+                });
+            }
+        }
+
+        function removeKaption() {
+            if (focusedKaption) {
+                focusedKaption.remove();
+            }
+        }
+
+        function changeColor() {
+            var color = $('#colorPicker').val();
+            console.log(color);
+            if (focusedKaption) {
+                focusedKaption.changeColor(color);
+            }
+        }
+
+        function pickColor(){
+            var picker = $('#picker_container');
+            if(picker.is(':visible')){
+                picker.hide();
+            } else {
+               picker.show();
+            }
+        }
+
+    </script>
+</head>
+<body style="background-image: url('./static_images/trans.png'); background-repeat: repeat;">
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Choose Fonts</h4>
+            </div>
+            <div class="modal-body">
+                <h2 class="h4" style="font-family: 'Six Caps'" onclick="changeFont('Six Caps')">Grumpy wizards make
+                    toxic brew for the evil Queen and
+                    Jack.</h2>
+
+                <h2 class="h4" style="font-family: 'Permanent Marker'" onclick="changeFont('Permanent Marker')">Grumpy
+                    wizards make toxic brew for the evil Queen
+                    and Jack.</h2>
+
+                <h2 class="h4" style="font-family: 'Rock Salt'" onclick="changeFont('Rock Salt')">Grumpy wizards make
+                    toxic brew for the evil Queen and
+                    Jack.</h2>
+
+                <h2 class="h4" style="font-family: 'Arial'" onclick="changeFont('Arial')">Grumpy wizards make toxic brew
+                    for the evil Queen and
+                    Jack.</h2>
+
+                <h2 class="h4" style="font-family: 'Lobster'" onclick="changeFont('Lobster')">Grumpy wizards make toxic
+                    brew for the evil Queen and
+                    Jack.</h2>
+
+                <h2 class="h4" style="font-family: 'Sanchez'" onclick="changeFont('Sanchez')">Grumpy wizards make toxic
+                    brew for the evil Queen and
+                    Jack.</h2>
+
+                <h2 class="h4" style="font-family: 'Playball'" onclick="changeFont('Playball')">Grumpy wizards make
+                    toxic brew for the evil Queen and
+                    Jack.</h2>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Apply</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="container"></div>
+<div class="navbar navbar-fixed-top" id="loading">
+    <div class="progress progress-striped active">
+        <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
+             style="width: 100%">
+        </div>
+    </div>
+</div>
+<div class="container" id="margin"></div>
+<div class="navbar navbar-fixed-bottom navbar-inverse" style="background: rgba(0, 0, 0, 0.5);" id="navbar">
+
+    <div class="container">
+        <div class="navbar-form">
+            <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal">
+                <span class="glyphicon glyphicon-font"></span>
+            </button>
+            <button type="button" class="navbar-btn btn btn-success btn-sm" onclick="changeAlign('left')">
+                <span class="glyphicon glyphicon-align-left"></span>
+            </button>
+            <button type="button" class="navbar-btn btn btn-success btn-sm" onclick="changeAlign('center')">
+                <span class="glyphicon glyphicon-align-center"></span>
+            </button>
+            <button type="button" class="navbar-btn btn btn-success btn-sm" onclick="changeAlign('right')">
+                <span class="glyphicon glyphicon-align-right"></span>
+            </button>
+            <button type="button" class="navbar-btn btn btn-success btn-sm" onclick="upSize()">
+                <span class="glyphicon glyphicon-arrow-up"></span>
+            </button>
+            <button type="button" class="navbar-btn btn btn-success btn-sm" onclick="downSize()">
+                <span class="glyphicon glyphicon-arrow-down"></span>
+            </button>
+            <button type="button" class="navbar-btn btn btn-success btn-sm" onclick="pickColor()">
+                <span class="glyphicon glyphicon-tint"></span>
+            </button>
+            <button type="button" class="navbar-btn btn btn-primary btn-sm" onclick="shareKaption()">
+                <span class="glyphicon glyphicon-share"></span>
+            </button>
+            <button type="button" class="navbar-btn btn btn-danger btn-sm" onclick="removeKaption()">
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+            <div class="container" id="picker_container">
+                <select name="colorpicker-glyphicons" onchange="changeColor()" id="colorPicker">
+                    <option value="#ffffff">#ffffff</option>
+                    <option value="#000000">#000000</option>
+                    <option value="#ac725e">#ac725e</option>
+                    <option value="#d06b64">#d06b64</option>
+                    <option value="#f83a22">#f83a22</option>
+                    <option value="#fa573c">#fa573c</option>
+                    <option value="#ff7537">#ff7537</option>
+                    <option value="#ffad46">#ffad46</option>
+                    <option value="#42d692">#42d692</option>
+                    <option value="#16a765">#16a765</option>
+                    <option value="#7bd148">#7bd148</option>
+                    <option value="#b3dc6c">#b3dc6c</option>
+                    <option value="#fbe983">#fbe983</option>
+                    <option value="#fad165">#fad165</option>
+                    <option value="#92e1c0">#92e1c0</option>
+                    <option value="#9fe1e7">#9fe1e7</option>
+                    <option value="#9fc6e7">#9fc6e7</option>
+                    <option value="#4986e7">#4986e7</option>
+                    <option value="#9a9cff">#9a9cff</option>
+                    <option value="#b99aff">#b99aff</option>
+                    <option value="#c2c2c2">#c2c2c2</option>
+                    <option value="#cabdbf">#cabdbf</option>
+                    <option value="#cca6ac">#cca6ac</option>
+                    <option value="#f691b2">#f691b2</option>
+                    <option value="#cd74e6">#cd74e6</option>
+                    <option value="#a47ae2">#a47ae2</option>
+                </select>
+            </div>
+            <div class="input-group input-group-md">
+                <span class="input-group-addon glyphicon-plus" id="addText"></span>
+                <input type="text" class="form-control" placeholder="Text" id="newText">
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>

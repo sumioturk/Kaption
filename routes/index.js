@@ -7,7 +7,8 @@ var config = require('../config');
 
 /* GET home page. */
 router.get('/', function (req, res) {
-    res.render('index', { title: 'Express' });
+    console.log(req.query.url);
+    res.render('test', { url: req.query.url});
 });
 
 router.post('/image', function (request, response) {
@@ -29,13 +30,16 @@ router.post('/image', function (request, response) {
                 if (err) {
                     response.json({err: err});
                 }
-                var genUrl = 'http://' + config.serverHostName + ':' + config.serverPortNumber +'/images/' + id;
-                console.log(genUrl);
+                var genUrl = 'http://' + config.serverHostName + ':' + config.serverPortNumber + '/images/' + id;
+                console.log('genUrl:' + genUrl);
                 response.json({url: genUrl});
             });
         });
-
+        request.on('error', function(err){
+            response.json({error: ""});
+        });
     })
+
 });
 
 router.post('/upload/image', function (request, response) {
@@ -56,4 +60,7 @@ router.post('/upload/image', function (request, response) {
     });
 });
 
+process.on('uncaughtException', function (err) {
+    console.log(err);
+});
 module.exports = router;
