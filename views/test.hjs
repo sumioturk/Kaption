@@ -41,7 +41,7 @@
 
         $(window).ready(function () {
             adjustMargin();
-
+            $('#tut').modal('show');
             $('select[name="colorpicker-glyphicons"]').simplecolorpicker({
                 theme: 'glyphicons'
             });
@@ -133,12 +133,12 @@
             }
         }
 
-        function pickColor(){
+        function pickColor() {
             var picker = $('#picker_container');
-            if(picker.is(':visible')){
+            if (picker.is(':visible')) {
                 picker.hide();
             } else {
-               picker.show();
+                picker.show();
             }
         }
 
@@ -186,6 +186,25 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Apply</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade " id="tut" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">How to use this shit.</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <img class="img-responsive" src="./static_images/tut_cap.png ">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Gotcha</button>
             </div>
         </div>
     </div>
