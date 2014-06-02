@@ -11,6 +11,11 @@ router.get('/kaption', function (req, res) {
     res.render('test', { url: req.query.url});
 });
 
+router.get('/', function (req, res) {
+    console.log(req.query.url);
+    res.render('index', {url: 'http://' + config.serverHostName + ':' + config.serverPortNumber});
+});
+
 router.post('/image', function (request, response) {
     console.log(request.body);
     var http = require('http');

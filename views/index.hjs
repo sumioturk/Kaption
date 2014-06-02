@@ -1,437 +1,74 @@
-<!DOCTYPE html>
 <html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-    <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v5.0.2.min.js"></script>
+<head>
+    <script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet"/>
     <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
-    <script src="../javascripts/jquery-1.11.1.min.js" type="text/javascript"></script>
+    <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v5.0.2.min.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css">
+
+    <script type="text/css">
+
+
+    </script>
+
+
     <script>
         WebFont.load({
             google: {
-                families: ['Droid Sans', 'Droid Serif', 'Permanent Marker', 'Rock Salt', 'Sanchez', 'Six Caps', 'Lobster']
+                families: ['Droid Sans', 'Six Caps', 'Permanent Marker', 'Rock Salt', 'Sanchez', 'Lobster', 'Playball']
             }
         });
+    </script>
+    <script type="text/javascript">
 
-        var ajaxReq = function (targetUrl) {
-            console.log("ajax upload " + targetUrl);
-            $.ajax({
-                type: 'post',
-                url: '../image',
-                data: {
-                    url: targetUrl
-                },
-                success: function (data) {
-                    console.log(data.url);
-                    onUrl(data.url);
-                },
-                error: function (error) {
-                    alert('Upload Failed');
+        var canGo;
+
+        $(window).ready(function () {
+            $('#go').hover(function () {
+                $('#go').css('background-color', '#4099FF');
+            }, function () {
+                $('#go').css('background-color', 'rgb(238,238,238)');
+            });
+            $("#url").bind("change paste keyup", function () {
+                canGo = false;
+                var text = $('#url').val();
+                if(text.match(/^http:\/\/.+(png|jpg|jpeg|bmp)/) != null){
+                    canGo = true;
+                    goKaption();
+                    $('#url').val('');
+                    $('#url').attr('place-holder', 'Paste Image URL');
                 }
-            })
-        };
-
-        $(document).ready(function () {
-            $('#addImage').click(function () {
-                ajaxReq($('#url').val())
-            })
+            });
         });
 
-    </script>
-    <style type="text/css">
-
-        .selector {
-            padding: 20px;
-            font-size: 40px;
+        function goKaption() {
+            window.open('{{url}}' + '/kaption?url=' + $('#url').val());
         }
-
-        .textbox {
-            background: white;
-            margin: 16px 17px 16px 0;
-            border: 1px solid #DDD;
-            border-radius: 5px;
-            box-shadow: 0 0 5px #DDD inset;
-            font-family: 'Permanent Marker';
-            font-size: 40px;
-            color: #666;
-            outline: none;
-            height: 64px;
-            width: 500px;
-        }
-
-        .css_btn_class {
-            font-size: 26px;
-            font-family: 'Permanent Maker';
-            font-weight: normal;
-            -moz-border-radius: 8px;
-            -webkit-border-radius: 8px;
-            border-radius: 8px;
-            border: 1px solid #3866a3;
-            padding: 16px 20px;
-            text-decoration: none;
-            background: -moz-linear-gradient(center top, #63b8ee 5%, #468ccf 100%);
-            background: -ms-linear-gradient(top, #63b8ee 5%, #468ccf 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#63b8ee', endColorstr='#468ccf');
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(5%, #63b8ee), color-stop(100%, #468ccf));
-            background-color: #63b8ee;
-            color: #14396a;
-            display: inline-block;
-            text-shadow: 1px 1px 0px #7cacde;
-            -webkit-box-shadow: inset 1px 1px 0px 0px #bee2f9;
-            -moz-box-shadow: inset 1px 1px 0px 0px #bee2f9;
-            box-shadow: inset 1px 1px 0px 0px #bee2f9;
-        }
-
-        .css_btn_class:hover {
-            background: -moz-linear-gradient(center top, #468ccf 5%, #63b8ee 100%);
-            background: -ms-linear-gradient(top, #468ccf 5%, #63b8ee 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#468ccf', endColorstr='#63b8ee');
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(5%, #468ccf), color-stop(100%, #63b8ee));
-            background-color: #468ccf;
-        }
-
-        .css_btn_class:active {
-            position: relative;
-            top: 1px;
-        }
-
-        input.bold {
-            font-size: 40px;
-        }
-
-        button.bold {
-            font-size: 20px;
-            width: 40px;
-            height: 40px;
-            padding: 14px;
-        }
-
-        @font-face {
-            font-family: 'Droid Sans';
-        }
-
-    </style>
-    <script type="text/javascript">
     </script>
 </head>
-<body>
+<body style=>
+<div class="jumbotron" style="height: 100%">
+    <div class="container">
+        <h1>
+            <span class="text-center" style="font-family: 'Six Caps'; font-size: 256px;">KAPTION</span>
+        </h1>
 
+        <p>
 
-<div id="container">
-<script type="text/javascript">
+    <span class="text-center" style="font-family: 'Sanchez'; font-size: 40px;">
+        En<span style="font-size: inherit; font-family: 'Permanent Marker'">rich</span> your words.
+    </span>
+        </p>
 
-var zooming;
-
-var imgObj = new Image();
-
-var layer = new Kinetic.Layer();
-var expand = false;
-
-var stage;
-
-function onUrl(imageUrl) {
-    console.log('load iamge');
-    imgObj.onload = function () {
-        console.log('loded iamge');
-        var image = new Kinetic.Image({
-            x: 0,
-            y: 0,
-            image: imgObj
-        });
-
-        stage = new Kinetic.Stage({
-            container: "container",
-            width: image.width(),
-            height: image.height()
-        });
-
-        var rect = new Kinetic.Rect({
-            x: 0,
-            y: 0,
-            width: stage.width(),
-            height: stage.height(),
-            stroke: 'black',
-            strokeWidth: 6
-        });
-
-
-        rect.on("mouseover", function () {
-        });
-
-
-        layer.add(image);
-        layer.add(rect);
-        stage.add(layer);
-
-    };
-    imgObj.src = imageUrl;
-}
-
-
-function onChange() {
-}
-
-function onAdd() {
-
-    var input = document.getElementById('text').value;
-    var color = document.getElementById('color').value;
-    var font = document.getElementById('font').value;
-
-
-    var text = new Kinetic.Text({
-        fontFamily: font,
-        x: 100,
-        y: 100,
-        fill: color,
-        fontSize: 16,
-        text: input,
-        padding: 10
-    });
-
-    var bound = new Kinetic.Rect({
-        x: 100,
-        y: 100,
-        width: text.width(),
-        height: text.height(),
-        strokeWidth: 1,
-        stroke: 'black'
-    });
-
-    var circle = new Kinetic.Circle({
-        x: bound.x() + bound.width(),
-        y: bound.y(),
-        radius: 16,
-        fill: 'red',
-        stroke: 'black',
-        strokeWidth: 2,
-        draggable: false,
-        dragBoundFunc: function (pos) {
-            return {
-                x: pos.x,
-                y: this.getAbsolutePosition().y
-            }
-        }
-    });
-
-    var zoomin = new Kinetic.Circle({
-        x: bound.x() + bound.width(),
-        y: bound.y() + bound.height(),
-        radius: 16,
-        fill: 'blue',
-        stroke: 'black',
-        strokeWidth: 2,
-        draggable: false
-        /*dragBoundFunc: function (pos) {
-         return {
-         x: pos.x,
-         y: this.getAbsolutePosition().y
-         }
-         }*/
-    });
-
-    var zoomout = new Kinetic.Circle({
-        x: bound.x(),
-        y: bound.getY() + bound.height(),
-        radius: 16,
-        fill: 'yellow',
-        stroke: 'black',
-        strokeWidth: 2,
-        draggable: false
-        /*dragBoundFunc: function (pos) {
-         return {
-         x: pos.x,
-         y: this.getAbsolutePosition().y
-         }
-         }*/
-    });
-
-    zoomout.on("click", function () {
-        textGroup.remove();
-        layer.draw();
-    });
-
-
-    text.on("mouseover touchstart", function (e) {
-        textGroup.draggable(true);
-    });
-
-    text.on("mouseleave touchend", function (e) {
-        textGroup.draggable(false);
-    });
-
-    circle.on("mouseover touchstart", function (e) {
-        circle.draggable(true);
-        circle.strokeWidth(6);
-        layer.draw();
-        console.log("start expanding");
-        expand = true;
-        //e.cancelBubble(true);
-    });
-
-    circle.on("mouseleave touchend", function (e) {
-        circle.strokeWidth(2);
-        circle.draggable(false);
-        layer.draw();
-        console.log("end expanding");
-        expand = false;
-        //e.cancelBubble(true);
-    });
-
-
-    zoomin.on("mouseover touchstart", function (e) {
-        this.strokeWidth(6);
-        layer.draw();
-        console.log("start zooming");
-        zooming = true;
-        //e.cancelBubble(true);
-    });
-
-    zoomin.on("mouseleave touchend", function (e) {
-        zoomin.strokeWidth(2);
-        layer.draw();
-        console.log("end zooming");
-        zooming = false;
-        //e.cancelBubble(true);
-    });
-
-    zoomin.on('tap click', function () {
-        console.log("appling zoom");
-        zoomin.draggable(false);
-        text.fontSize(text.fontSize() + 4);
-        text.width(zoomin.getX() - text.getX());
-        bound.width(text.width());
-        bound.height(text.height());
-        circle.x(bound.getX() + bound.width());
-        circle.y(bound.getY());
-        zoomin.x(bound.getX() + bound.width());
-        zoomin.y(bound.getY() + bound.height());
-        zoomout.x(bound.getX());
-        zoomout.y(bound.getY() + bound.height());
-        layer.draw();
-    });
-
-
-    var textGroup = new Kinetic.Group({
-        draggable: false
-    });
-    textGroup.on("mouseleave", function () {
-        circle.hide();
-        zoomin.hide();
-        zoomout.hide();
-        bound.hide();
-        layer.draw();
-    });
-
-    textGroup.on("mouseover", function () {
-        circle.show();
-        zoomin.show();
-        zoomout.show();
-        bound.show();
-        layer.draw();
-    });
-    //textGroup.draggable(true);
-    textGroup.add(bound);
-    textGroup.add(text);
-    textGroup.add(circle);
-    textGroup.add(zoomin);
-    textGroup.add(zoomout);
-
-    textGroup.on('touchmove dragmove', function (e) {
-        //console.log(stage.getPointerPosition());
-        //text.text(textGroup.x() + ', ' + textGroup.y() + ':' + line.points().length);
-
-        if (zooming) {
-
-            return;
-        }
-
-        if (!expand) {
-            return;
-        }
-        //console.log(stage.getPointerPosition());
-        var x;
-        var y;
-        // if (e.evt.touches) {
-        //x = e.evt.touches[0].pageX;
-        //y = e.evt.touches[0].pageY;
-        //} else {
-        //x = e.evt.pageX;
-        //y = e.evt.pageY;
-        //}
-        x = circle.getX();
-        y = circle.getY();
-        zoomin.x(x);
-        text.width(x - text.getX());
-        //text.height(y - text.getAbsolutePosition().y);
-        //text.text(prompt());
-        bound.width(text.width());
-        bound.height(text.height());
-        zoomin.y(bound.getY() + bound.height());
-        zoomin.x(bound.getX() + bound.width());
-        zoomout.x(bound.getX());
-        zoomout.y(bound.getY() + bound.height());
-        //line.points(line.points().concat([x, y]));
-        layer.draw();
-        //e.bubbles
-    });
-    layer.add(textGroup);
-    layer.draw();
-
-}
-
-function onSave() {
-    stage.toDataURL({
-        callback: function (url) {
-            $.ajax({
-                type: 'post',
-                url: '../upload/image',
-                data: {
-                    url: url
-                },
-                success: function (data) {
-                    console.log(data);
-                    var tweet = $('#text').val();
-                    window.open("http://twitter.com/share?text=" + tweet + "&url=" + data.url, 'share', 'height=320, width=480');
-                },
-                error: function (error) {
-                    alert('Upload Failed');
-                }
-            })
-        }
-    });
-}
-</script>
+        <div class="input-group input-group-lg" style="width:100%">
+            <input type="text" class="form-control" placeholder="Paste Image URL" id="url">
+        </div>
+    </div>
 </div>
 
-<div style="width: auto; height:auto;">
-    <input type="text"
-           value="http://www.cuzzsoft.com/wallpaper/1280x800-11285-best-car-backgrounds-lambo.jpg"
-           class="textbox" style="font-family: Arial;" onchange="onUrl()" id="url">
-    <button type="button" class="css_btn_class" id="addImage">load url</button>
-</div>
-<div style="width: auto; height:auto;">
-    <input type="text" class="textbox" onchange="onChange()" id="text">
-    <button type="button" class="css_btn_class" id="add" onclick="onAdd()">add text</button>
-    <select id="color" name="color" class="selector">
-        <option value="red">Red</option>
-        <option value="blue">Blue</option>
-        <option value="white">White</option>
-        <option value="black">Black</option>
-        <option value="grey">Grey</option>
-        <option value="green">green</option>
-        <option value="orange">Orange</option>
-        <option value="pink">Pink</option>
-    </select>
-    <select id="font" name="color" class="selector">
-        <option value="Impact">Impact</option>
-        <option value="Permanent Marker">Permanent Marker</option>
-        <option value="Rock Salt">Rock Salt</option>
-        <option value="Sanchez">Sanchez</option>
-        <option value="Six Caps">Six Caps</option>
-        <option value="Lobster">Lobster</option>
-    </select>
-    <button type="button" class="css_btn_class" id="twitter" onclick="onSave()">share this shit</button>
-
-</div>
 </body>
 </html>
