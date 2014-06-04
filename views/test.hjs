@@ -192,7 +192,7 @@
 </div>
 
 <div class="modal fade  " id="tut" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-lg" style="margin-right: 16%; margin-left: 16%; margin-top: 5%;">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -200,7 +200,9 @@
             </div>
             <div class="modal-body">
                 <div class="container">
-                    <img class="img-responsive" src="./static_images/tut_cap.png ">
+                    <video autoplay="autoplay" controls="controls" style="width: 100%; height: auto;">
+                        <source src="./static_images/tut.mp4" class="" style="" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/>
+                    </video>
                 </div>
             </div>
             <div class="modal-footer">
