@@ -65,6 +65,11 @@ router.post('/upload/image', function (request, response) {
     });
 });
 
+router.post("/", function(request, response){
+    console.log(request.files);
+    response.render('index', {url: ""});
+});
+
 process.on('uncaughtException', function (err) {
     console.log(err);
 });

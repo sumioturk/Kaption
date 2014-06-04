@@ -15,7 +15,7 @@ app.set('view engine', 'hjs');
 
 app.use(favicon());
 app.use(logger('dev'));
-app.use(bodyParser({limit: '100mb'}));
+app.use(bodyParser({limit: '100mb', keepExtensions: true, uploadDir: __dirname + '/public/imaghes'}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());

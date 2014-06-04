@@ -25,9 +25,18 @@
     </script>
     <script type="text/javascript">
 
+        // Check for the various File API support.
+        if (window.File && window.FileReader && window.FileList && window.Blob) {
+        } else {
+            alert('The File APIs are not fully supported in this browser.');
+        }
+
         var canGo;
 
         $(window).ready(function () {
+            $('#loading').hide();
+            $('#upload').hide();
+            $("#list").hide();
             $('#go').hover(function () {
                 $('#go').css('background-color', '#4099FF');
             }, function () {
@@ -36,7 +45,7 @@
             $("#url").bind("change paste keyup", function () {
                 canGo = false;
                 var text = $('#url').val();
-                if(text.match(/^http:\/\/.+(png|jpg|jpeg|bmp)/) != null){
+                if (text.match(/^http:\/\/.+(png|jpg|jpeg|bmp)/) != null) {
                     canGo = true;
                     goKaption();
                     $('#url').val('');
@@ -51,6 +60,13 @@
     </script>
 </head>
 <body style=>
+<div class="navbar navbar-fixed-top" id="loading">
+    <div class="progress progress-striped active">
+        <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
+             style="width: 100%">
+        </div>
+    </div>
+</div>
 <div class="jumbotron" style="height: 100%">
     <div class="container">
         <h1>
@@ -64,9 +80,91 @@
     </span>
         </p>
 
-        <div class="input-group input-group-lg" style="width:100%">
-            <input type="text" class="form-control" placeholder="Paste Image URL" id="url">
+        <div class="container">
+            <div class="input-group input-group-lg" style="width:100%">
+                <input type="text" class="form-control" placeholder="Paste Image URL" id="url">
+            </div>
         </div>
+        <div class="container">
+            <output class="form-control" id="list"></output>
+            <button class="btn btn-default" onclick="upload()" id="upload">Upload</button>
+        </div>
+
+        <div class="container">
+
+            <div class="jumbotron">
+                <h1 style="text-align: center" id="drop_zone"><span style="font-family: 'Permanent Marker';">Drop</span> file here</div>
+            </div>
+
+            <script>
+
+                var file;
+
+                function upload(){
+                    var reader = new FileReader();
+                    reader.onload = function(){
+                        console.log(reader.result);
+                        $.ajax({
+                            type: 'post',
+                            url: '../upload/image',
+                            data: {
+                                url: reader.result
+                            },
+                            success: function (data) {
+                                console.log(data);
+                                $('#loading').hide();
+                                $('#url').val(data.url);
+                                $('#url').keyup();
+                            },
+                            error: function (error) {
+                                alert('Upload Failed');
+                            }
+                        });
+                    };
+                    reader.readAsDataURL(file);
+                }
+
+                function handleFileSelect(evt) {
+                    evt.stopPropagation();
+                    evt.preventDefault();
+
+                    var files = evt.dataTransfer.files; // FileList object.
+                    $('output').show();
+                    file = files[0];
+                    // files is a FileList of File objects. List some properties.
+                    var output = [];
+                    for (var i = 0, f; f = files[i]; i++) {
+                        if(!f.type.match(/image/)){
+                            $('#upload').hide();
+                            alert('File format is not supported');
+                            $("#list").hide();
+                            return;
+                        }
+                        $('#upload').show();
+                        $("#list").show();
+                        $("#loading").show();
+                        output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+                                f.size, ' bytes, last modified: ',
+                                f.lastModifiedDate.toLocaleDateString(), '</li>');
+                    }
+                    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+                }
+
+                function handleDragOver(evt) {
+                    evt.stopPropagation();
+                    evt.preventDefault();
+                    evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+                }
+
+                // Setup the dnd listeners.
+                var dropZone = document.getElementById('drop_zone');
+                dropZone.addEventListener('dragover', handleDragOver, false);
+                dropZone.addEventListener('drop', handleFileSelect, false);
+            </script>
+
+        </div>
+
+
     </div>
 </div>
 
