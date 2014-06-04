@@ -101,6 +101,7 @@
                 var file;
 
                 function upload(){
+                    $("#loading").show();
                     var reader = new FileReader();
                     reader.onload = function(){
                         console.log(reader.result);
@@ -142,7 +143,6 @@
                         }
                         $('#upload').show();
                         $("#list").show();
-                        $("#loading").show();
                         output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
                                 f.size, ' bytes, last modified: ',
                                 f.lastModifiedDate.toLocaleDateString(), '</li>');
