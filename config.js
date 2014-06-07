@@ -5,7 +5,7 @@ var config = {
 
 
 config.dev = {
-    serverHostName: 'localhost',
+    serverHostName: '192.168.20.7',
     serverPortNumber: 1337,
     imageCacheTime: 60000
 };

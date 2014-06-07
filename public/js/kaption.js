@@ -96,6 +96,41 @@ function Kaption(config) {
             adjustedDimension.height = imgObj.height * (stage.width() / imgObj.width);
             stage.height(adjustedDimension.height);
             layer.add(baseImage);
+            var group = new Kinetic.Group();
+            var poly = new Kinetic.Line({
+                points: [0, 0, 100, 0, 0, 100],
+                fill: 'rgba(240, 0, 0, 0.6)',
+                strokeWidth: 5,
+                closed: true
+            });
+
+            var textMain = new Kinetic.Text({
+                x: 10,
+                y: 38,
+                rotation: -45,
+                text: 'KAPTION',
+                fill: 'white',
+                fontFamily: 'Six Caps',
+                padding: 0,
+                alignment: 'center',
+                fontSize: 26
+            });
+
+            var textSub = new Kinetic.Text({
+                x: 0,
+                y: 32,
+                rotation: -45,
+                text: 'powered by',
+                fill: 'white',
+                padding: 5,
+                fontSize: 8
+            });
+            group.add(poly);
+            group.add(textMain);
+            group.add(textSub);
+            // add the shape to the layer
+            layer.add(group);
+
             layer.draw();
             config.onImageLoaded();
         };
@@ -264,7 +299,7 @@ function Kaption(config) {
             layer.draw();
         });
 
-        textGroup.on('click', function () {
+        textGroup.on('click tap', function () {
             var f = focused;
             texts.forEach(function (t) {
                 console.log(t.setFocus(false));

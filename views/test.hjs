@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="./css/jquery.simplecolorpicker-glyphicons.css">
     <link rel="stylesheet" href="./css/jquery.simplecolorpicker-fontawesome.css">
     <script src="./js/jquery.simplecolorpicker.js"></script>
+    <script src="./js/slide.js"></script>
 
     <script type="text/css">
 
@@ -41,6 +42,7 @@
 
         $(window).ready(function () {
             adjustMargin();
+
             $('#tut').modal('show');
             $('select[name="colorpicker-glyphicons"]').simplecolorpicker({
                 theme: 'glyphicons'
@@ -80,6 +82,7 @@
                 boundaryStrokeWidth: 40,
                 onImageLoaded: function () {
                     $('#loading').hide();
+
                 }
             });
             Kaption.onAddImage("{{url}}");
@@ -192,7 +195,7 @@
 </div>
 
 <div class="modal fade  " id="tut" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-lg" style="margin-right: 16%; margin-left: 16%; margin-top: 5%;">
+    <div class="modal-lg" style="margin-right: 16%; margin-left: 16%; margin-top: 4%">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
