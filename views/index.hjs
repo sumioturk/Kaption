@@ -19,7 +19,7 @@
     <script>
         WebFont.load({
             google: {
-                families: ['Droid Sans', 'Six Caps', 'Permanent Marker', 'Rock Salt', 'Sanchez', 'Lobster', 'Playball']
+                families: ['Droid Sans', 'Six Caps', 'Permanent Marker', 'Rock Salt', 'Sanchez', 'Lobster', 'Playball', 'Anton', 'Oswald', 'Exo', 'Archivo Black', 'Paytone One', 'Syncopate', 'Allerta', 'Coda Caption', 'Jura']
             }
         });
     </script>
@@ -68,17 +68,23 @@
 </div>
 <div class="jumbotron" style="height: 100%">
     <div class="container">
-        <h1>
-            <span class="text-center" style="font-family: 'Six Caps'; font-size: 256px;">KAPTION</span>
-        </h1>
 
-        <p>
+        <div class="row">
+            <div class="col-lg-6">
+                <h1>
+                    <span class="text-center" style="font-family: 'Six Caps'; font-size: 256px;">KAPTION</span>
+                </h1>
+
+                <p>
 
     <span class="text-center" style="font-family: 'Sanchez'; font-size: 40px;">
         En<span style="font-size: inherit; font-family: 'Permanent Marker'">rich</span> your words.
     </span>
-        </p>
-
+                </p>
+            </div>
+            <div class="col-lg-6">
+            </div>
+        </div>
         <div class="container">
             <div class="input-group input-group-lg" style="width:100%">
                 <input type="text" class="form-control" placeholder="Paste Image URL" id="url">

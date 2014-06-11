@@ -13,7 +13,9 @@ function Kaption(config) {
         height: stage.height()
     });
     var layer = new Kinetic.Layer();
+    var imageLayer = new Kinetic.Layer();
     layer.add(containerRect);
+    stage.add(imageLayer);
     stage.add(layer);
     stage.draw();
 
@@ -26,7 +28,7 @@ function Kaption(config) {
     }
 
     function addText(textConfig) {
-        new KaptionText({
+        var kt = new KaptionText({
             text: textConfig.text,
             font: textConfig.font,
             fontSize: textConfig.fontSize,
@@ -35,6 +37,10 @@ function Kaption(config) {
             x: textConfig.x,
             y: textConfig.y
         });
+        textConfig.onFocus(function () {
+            kt.changeFocus(true);
+            return kt;
+        }());
     }
 
     function loadImage(imageUrl) {
@@ -56,7 +62,7 @@ function Kaption(config) {
     }
 
     function exportKaption(callback) {
-        texts.forEach(function(t){
+        texts.forEach(function (t) {
             t.export();
         });
         stage.toDataURL({
@@ -95,7 +101,8 @@ function Kaption(config) {
             adjustedDimension.width = stage.width();
             adjustedDimension.height = imgObj.height * (stage.width() / imgObj.width);
             stage.height(adjustedDimension.height);
-            layer.add(baseImage);
+            imageLayer.add(baseImage);
+            imageLayer.draw();
             var group = new Kinetic.Group();
             var poly = new Kinetic.Line({
                 points: [0, 0, 100, 0, 0, 100],
@@ -129,9 +136,10 @@ function Kaption(config) {
             group.add(textMain);
             group.add(textSub);
             // add the shape to the layer
-            layer.add(group);
+            imageLayer.add(group);
 
             layer.draw();
+            imageLayer.draw();
             config.onImageLoaded();
         };
         imgObj.src = imageUrl;
@@ -151,9 +159,12 @@ function Kaption(config) {
             align: 'center'
         });
 
+        var x = kaptionTextConfig.x;
+        var y = kaptionTextConfig.y;
+
         var bound = new Kinetic.Rect({
-            x: 0,
-            y: 0,
+            x: x,
+            y: y,
             width: text.width(),
             height: text.height(),
             strokeWidth: 4,
@@ -298,6 +309,7 @@ function Kaption(config) {
             bound.hide();
             layer.draw();
         });
+
 
         textGroup.on('click tap', function () {
             var f = focused;
@@ -469,7 +481,7 @@ function Kaption(config) {
             layer.draw();
         }
 
-        function prepareExport(){
+        function prepareExport() {
             console.log('prepare for export');
             bound.hide();
             circle.hide();
@@ -478,8 +490,13 @@ function Kaption(config) {
             layer.draw();
         }
 
-        function removeKaption(){
+        function removeKaption() {
             textGroup.remove();
+            layer.draw();
+        }
+
+        function changeStroke(stroke) {
+            text.shadowColor('black');
             layer.draw();
         }
 
@@ -505,11 +522,17 @@ function Kaption(config) {
             changeText: function (text) {
                 changeText(text);
             },
-            export: function(){
+            export: function () {
                 prepareExport();
             },
-            remove: function(){
+            remove: function () {
                 removeKaption();
+            },
+            changeStoke: function (stroke) {
+                changeStroke(stroke);
+            },
+            changeFocus: function(focus){
+                changeFocus(focus);
             }
         };
         texts.push(kaptionText);
@@ -529,8 +552,11 @@ function Kaption(config) {
         getFocusedKaption: function () {
 
         },
-        export: function(callback){
+        export: function (callback) {
             exportKaption(callback);
+        },
+        getDimention: function () {
+            return {width: baseImage.width(), height: baseImage.height()};
         }
     };
 }

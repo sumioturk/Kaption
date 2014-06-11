@@ -1,4 +1,6 @@
 <head>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
     <script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet"/>
@@ -26,7 +28,7 @@
     <script>
         WebFont.load({
             google: {
-                families: ['Droid Sans', 'Six Caps', 'Permanent Marker', 'Rock Salt', 'Sanchez', 'Lobster', 'Playball']
+                families: ['Droid Sans', 'Six Caps', 'Permanent Marker', 'Rock Salt', 'Sanchez', 'Lobster', 'Playball', 'Anton', 'Oswald', 'Exo', 'Archivo Black', 'Paytone One', 'Syncopate', 'Allerta', 'Coda Caption', 'Jura']
             }
         });
     </script>
@@ -82,7 +84,20 @@
                 boundaryStrokeWidth: 40,
                 onImageLoaded: function () {
                     $('#loading').hide();
-
+                    console.log(Kaption.getDimention());
+                    Kaption.onAddText({
+                        x: Kaption.getDimention().width / 3,
+                        y: Kaption.getDimention().height / 3,
+                        text: "TEXT",
+                        color: 'white',
+                        fontSize: 80,
+                        font: 'Six Caps',
+                        onFocus: function (text) {
+                            console.log("callback: " + text);
+                            $('#newText').val(text.getText());
+                            focusedKaption = text;
+                        }
+                    });
                 }
             });
             Kaption.onAddImage("{{url}}");
@@ -109,6 +124,15 @@
         function downSize() {
             if (focusedKaption) {
                 focusedKaption.changeSize(-12);
+            }
+        }
+
+        function changeStroke() {
+            if (focusedKaption) {
+                focusedKaption.changeStoke({
+                    width: 4,
+                    color: 'black'
+                });
             }
         }
 
@@ -149,73 +173,6 @@
 </head>
 <body style="background-image: url('./static_images/trans.png'); background-repeat: repeat;">
 
-
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Choose Fonts</h4>
-            </div>
-            <div class="modal-body">
-                <h2 class="h4" style="font-family: 'Six Caps'" onclick="changeFont('Six Caps')">Grumpy wizards make
-                    toxic brew for the evil Queen and
-                    Jack.</h2>
-
-                <h2 class="h4" style="font-family: 'Permanent Marker'" onclick="changeFont('Permanent Marker')">Grumpy
-                    wizards make toxic brew for the evil Queen
-                    and Jack.</h2>
-
-                <h2 class="h4" style="font-family: 'Rock Salt'" onclick="changeFont('Rock Salt')">Grumpy wizards make
-                    toxic brew for the evil Queen and
-                    Jack.</h2>
-
-                <h2 class="h4" style="font-family: 'Arial'" onclick="changeFont('Arial')">Grumpy wizards make toxic brew
-                    for the evil Queen and
-                    Jack.</h2>
-
-                <h2 class="h4" style="font-family: 'Lobster'" onclick="changeFont('Lobster')">Grumpy wizards make toxic
-                    brew for the evil Queen and
-                    Jack.</h2>
-
-                <h2 class="h4" style="font-family: 'Sanchez'" onclick="changeFont('Sanchez')">Grumpy wizards make toxic
-                    brew for the evil Queen and
-                    Jack.</h2>
-
-                <h2 class="h4" style="font-family: 'Playball'" onclick="changeFont('Playball')">Grumpy wizards make
-                    toxic brew for the evil Queen and
-                    Jack.</h2>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Apply</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade  " id="tut" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-lg" style="margin-right: 16%; margin-left: 16%; margin-top: 4%">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">How to use this shit.</h4>
-            </div>
-            <div class="modal-body">
-                <div class="container">
-                    <video autoplay="autoplay" controls="controls" style="width: 100%; height: auto;">
-                        <source src="./static_images/tut.mp4" class="" style="" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'/>
-                    </video>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Gotcha</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 <div id="container"></div>
 <div class="navbar navbar-fixed-top" id="loading">
     <div class="progress progress-striped active">
@@ -229,9 +186,56 @@
 
     <div class="container">
         <div class="navbar-form">
-            <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal">
-                <span class="glyphicon glyphicon-font"></span>
-            </button>
+            <div class="btn-group dropup">
+                <button type="button" class="btn btn-sm btn-success btn-dropdown-toggle" data-toggle="dropdown">
+                    <span class="glyphicon glyphicon-font"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <!-- Dropdown menu links -->
+                    <li><span onclick="changeFont('Anton')" style="font-family: 'Anton'; padding: 8;">Anton</span></li>
+                    <li class="divider"></li>
+                    <li><span onclick="changeFont('Oswald')" style="font-family: 'Oswald'; padding: 8;">Oswald</span>
+                    </li>
+                    <li class="divider"></li>
+                    <li><span onclick="changeFont('Archivo Black')" style="font-family: 'Archivo Black'; padding: 8;">Archivo Black</span>
+                    </li>
+                    <li class="divider"></li>
+                    <li><span onclick="changeFont('Paytone One')" style="font-family: 'Paytone One'; padding: 8;">Paytone One</span>
+                    </li>
+                    <li class="divider"></li>
+                    <li><span onclick="changeFont('Syncopate')"
+                              style="font-family: 'Syncopate'; padding: 8;">Syncopate</span></li>
+                    <li class="divider"></li>
+                    <li><span onclick="changeFont('Allerta')" style="font-family: 'Allerta'; padding: 8;">Allerta</span>
+                    </li>
+                    <li class="divider"></li>
+                    <li><span onclick="changeFont('Coda Caption')" style="font-family: 'Coda Caption'; padding: 8;">Coda Caption</span>
+                    </li>
+                    <li class="divider"></li>
+                    <li><span onclick="changeFont('Jura')" style="font-family: 'Jura'; padding: 8;">Jura</span></li>
+                    <li class="divider"></li>
+                    <li><span onclick="changeFont('Six Caps')"
+                              style="font-family: 'Six Caps'; padding: 8;">Six Caps</span></li>
+                    <li class="divider"></li>
+                    <li><span onclick="changeFont('Permanent Marker')"
+                              style="font-family: 'Permanent Marker'; padding: 8;">Permanent Marker</span></li>
+                    <li class="divider"></li>
+                    <li><span onclick="changeFont('Rock Salt')"
+                              style="font-family: 'Rock Salt'; padding: 8;">Rock Salt</span></li>
+                    <li class="divider"></li>
+                    <li><span onclick="changeFont('Arial')" style="font-family: 'Arial'; padding: 8;">Arial</span></li>
+                    <li class="divider"></li>
+                    <li><span onclick="changeFont('Lobster')" style="font-family: 'Lobster'; padding: 8;">Lobster</span>
+                    </li>
+                    <li class="divider"></li>
+                    <li><span onclick="changeFont('Sanchez')" style="font-family: 'Sanches'; padding: 8;">Sanchez</span>
+                    </li>
+                    <li class="divider"></li>
+                    <li><span onclick="changeFont('Playball')"
+                              style="font-family: 'Playball'; padding: 8;">Playball</span></li>
+                </ul>
+            </div>
+
             <button type="button" class="navbar-btn btn btn-success btn-sm" onclick="changeAlign('left')">
                 <span class="glyphicon glyphicon-align-left"></span>
             </button>
