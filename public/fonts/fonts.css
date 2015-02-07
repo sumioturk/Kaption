@@ -1,0 +1,43 @@
+@font-face {
+    font-family: 'heavy';
+    font-style: normal;
+    font-weight: bolder;
+    src: url('GenShinGothic-P-Medium.ttf');
+}
+
+@font-face {
+    font-family: 'nicomoji';
+    src: url('nicomoji-plus_v0.9.ttf');
+}
+
+@font-face {
+    font-family: 'kanjyuku';
+    src: url('kanjyuku.otf');
+}
+
+@font-face {
+    font-family: 'mgen';
+    src: url('mgenplus-1p-medium.ttf');
+}
+
+@font-face {
+    font-family: 'mgen-heavy';
+    src: url('mgenplus-1p-heavy.ttf');
+}
+
+@font-face {
+    font-family: 'honoka';
+    src: url('font_1_honokamin.ttf');
+}
+
+@font-face {
+    font-family: 'sika';
+    src: url('sika.ttf');
+}
+
+@font-face {
+    font-family: 'yosimo';
+    src: url('yosimo.otf');
+}
+
+

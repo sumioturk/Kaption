@@ -29,6 +29,8 @@ function Kaption(config) {
 
     function addText(textConfig) {
         var kt = new KaptionText({
+            bgColor: textConfig.bgColor,
+            bgOpa: textConfig.bgOpa,
             text: textConfig.text,
             font: textConfig.font,
             fontSize: textConfig.fontSize,
@@ -132,9 +134,9 @@ function Kaption(config) {
                 padding: 5,
                 fontSize: 8
             });
-            group.add(poly);
-            group.add(textMain);
-            group.add(textSub);
+            //group.add(poly);
+            //group.add(textMain);
+            //group.add(textSub);
             // add the shape to the layer
             imageLayer.add(group);
 
@@ -155,7 +157,6 @@ function Kaption(config) {
             fill: kaptionTextConfig.color,
             fontSize: kaptionTextConfig.fontSize,
             text: kaptionTextConfig.text,
-            padding: 10,
             align: 'center'
         });
 
@@ -167,8 +168,20 @@ function Kaption(config) {
             y: y,
             width: text.width(),
             height: text.height(),
-            strokeWidth: 4,
-            stroke: 'white'
+            strokeWidth: 1,
+            stroke: 'red'
+        });
+
+        console.log("bgColor:" + kaptionTextConfig.bgColor);
+        console.log("bgOpa:" + kaptionTextConfig.bgOpa);
+
+        var bg = new Kinetic.Rect({
+            x: x,
+            y: y,
+            width: text.width(),
+            height: text.height(),
+            fill: kaptionTextConfig.bgColor,
+            opacity: kaptionTextConfig.bgOpa
         });
 
         var circle = new Kinetic.Circle({
@@ -288,6 +301,8 @@ function Kaption(config) {
             text.width(zoomin.getX() - text.getX());
             bound.width(text.width());
             bound.height(text.height());
+            bg.width(text.width());
+            bg.height(text.height());
             circle.x(bound.getX() + bound.width());
             circle.y(bound.getY());
             zoomin.x(bound.getX() + bound.width());
@@ -319,7 +334,7 @@ function Kaption(config) {
             focused = !f;
             console.log("clicked" + texts.length);
             if (focused) {
-                bound.stroke('#2E9AFE');
+                bound.stroke('red');
                 circle.fill('#2E9AFE');
                 zoomin.fill('#2E9AFE');
                 zoomout.fill('#2E9AFE');
@@ -350,7 +365,7 @@ function Kaption(config) {
             bound.show();
             layer.draw();
         });
-        //textGroup.draggable(true);
+        textGroup.add(bg);
         textGroup.add(bound);
         textGroup.add(text);
         textGroup.add(circle);
@@ -382,6 +397,8 @@ function Kaption(config) {
             //text.text(prompt());
             bound.width(text.width());
             bound.height(text.height());
+            bg.width(text.width());
+            bg.height(text.height());
             zoomin.y(bound.getY() + bound.height());
             zoomin.x(bound.getX() + bound.width());
             zoomout.x(bound.getX());
@@ -403,6 +420,28 @@ function Kaption(config) {
             //text.text(prompt());
             bound.width(text.width());
             bound.height(text.height());
+            bg.width(text.width());
+            bg.height(text.height());
+            zoomin.y(bound.getY() + bound.height());
+            zoomin.x(bound.getX() + bound.width());
+            zoomout.x(bound.getX());
+            zoomout.y(bound.getY() + bound.height());
+            //line.points(line.points().concat([x, y]));
+            layer.draw();
+        }
+
+        function setSize(size) {
+            text.fontSize(size);
+            x = circle.getX();
+            y = circle.getY();
+            zoomin.x(x);
+            text.width(x - text.getX());
+            //text.height(y - text.getAbsolutePosition().y);
+            //text.text(prompt());
+            bound.width(text.width());
+            bound.height(text.height());
+            bg.width(text.width());
+            bg.height(text.height());
             zoomin.y(bound.getY() + bound.height());
             zoomin.x(bound.getX() + bound.width());
             zoomout.x(bound.getX());
@@ -416,8 +455,10 @@ function Kaption(config) {
             layer.draw();
         }
 
-        function changeColor(color) {
+        function changeColor(color, opa) {
+            console.log("changeColor:" + color + ":" + opa);
             text.fill(color);
+            text.opacity(opa);
             layer.draw();
         }
 
@@ -431,6 +472,8 @@ function Kaption(config) {
             //text.text(prompt());
             bound.width(text.width());
             bound.height(text.height());
+            bg.width(text.width());
+            bg.height(text.height());
             zoomin.y(bound.getY() + bound.height());
             zoomin.x(bound.getX() + bound.width());
             zoomout.x(bound.getX());
@@ -439,10 +482,16 @@ function Kaption(config) {
             layer.draw();
         }
 
+        function changeBGColor(color, opa){
+            bg.fill(color);
+            bg.opacity(opa);
+            layer.draw();
+        }
+
         function changeFocus(focus) {
             focused = focus;
             if (focused) {
-                bound.stroke('#2E9AFE');
+                bound.stroke('red');
                 circle.fill('#2E9AFE');
                 zoomin.fill('#2E9AFE');
                 zoomout.fill('#2E9AFE');
@@ -473,6 +522,8 @@ function Kaption(config) {
             //text.text(prompt());
             bound.width(text.width());
             bound.height(text.height());
+            bg.width(text.width());
+            bg.height(text.height());
             zoomin.y(bound.getY() + bound.height());
             zoomin.x(bound.getX() + bound.width());
             zoomout.x(bound.getX());
@@ -504,20 +555,36 @@ function Kaption(config) {
             changeSize: function (diff) {
                 changeSize(diff);
             },
+            setSize: function(size){
+                setSize(size);
+            },
             changeFont: function (font) {
                 changeFont(font);
             },
             changeAlignment: function (align) {
                 changeAlignment(align);
             },
-            changeColor: function (color) {
-                changeColor(color);
+            changeColor: function (color, opa) {
+                changeColor(color, opa);
             },
             setFocus: function (focus) {
                 changeFocus(focus);
             },
             getText: function () {
                 return text.text();
+            },
+            getColor: function () {
+                console.log("text.fill()=" + bg.fill());
+                return text.fill();
+            },
+            getOpa: function () {
+                return text.opacity();
+            },
+            getBGColor: function () {
+                return bg.fill();
+            },
+            getBGOpa: function () {
+                return bg.opacity();
             },
             changeText: function (text) {
                 changeText(text);
@@ -533,6 +600,9 @@ function Kaption(config) {
             },
             changeFocus: function(focus){
                 changeFocus(focus);
+            },
+            changeBGColor: function(color, opa){
+                changeBGColor(color, opa);
             }
         };
         texts.push(kaptionText);

@@ -48,8 +48,8 @@ router.post('/image', function (request, response) {
 });
 
 router.post('/upload/image', function (request, response) {
-    console.log(request.host);
     var imagedataString = request.body.url.replace(/.+base64,/, "");
+    console.log("/upload/image data=" + imagedataString);
     var hash = crypto.createHash('md5');
     hash.setEncoding('utf-8');
     hash.update(imagedataString);

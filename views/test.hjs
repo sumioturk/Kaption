@@ -1,175 +1,247 @@
 <head>
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
-    <script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet"/>
-    <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
-    <script src="http://d3lp1msu2r81bx.cloudfront.net/kjs/js/lib/kinetic-v5.0.2.min.js"></script>
-    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
-    <script type="text/javascript" src="./js/kaption.js"></script>
-    <script type="text/javascript" src="./js/spectrum.js"></script>
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.css">
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css">
-    <link rel="stylesheet" href="./css/jquery.simplecolorpicker.css">
-    <link rel="stylesheet" href="./css/jquery.simplecolorpicker-regularfont.css">
-    <link rel="stylesheet" href="./css/jquery.simplecolorpicker-glyphicons.css">
-    <link rel="stylesheet" href="./css/jquery.simplecolorpicker-fontawesome.css">
-    <script src="./js/jquery.simplecolorpicker.js"></script>
-    <script src="./js/slide.js"></script>
+<meta name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+<script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet"/>
+<script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+<script src="./js/bootstrap-slider.js"></script>
+<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+<script src="./js/kinetic-5.1.0.min.js"></script>
+<script type="text/javascript" src="./js/kaption.js"></script>
+<script type="text/javascript" src="./js/spectrum.js"></script>
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.css">
+<link rel="stylesheet" href="./css/slider.css">
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css">
+<link rel="stylesheet" href="./css/jquery.simplecolorpicker.css">
+<link rel="stylesheet" href="./css/jquery.simplecolorpicker-regularfont.css">
+<link rel="stylesheet" href="./css/jquery.simplecolorpicker-glyphicons.css">
+<link rel="stylesheet" href="./css/jquery.simplecolorpicker-fontawesome.css">
+<script src="./js/jquery.simplecolorpicker.js"></script>
+<script src="./js/slide.js"></script>
 
-    <script type="text/css">
+<script type="text/css">
+
+    #ex1Slider .slider-selection {
+        background: #BABABA;
+        width: 100%;
+    }
+</script>
 
 
-    </script>
+<script>
+    WebFont.load({
+        custom: {
+            families: ['heavy', 'nicomoji', 'mgen', 'kanjyuku', 'honoka', 'sika', 'yosimo'],
+            urls: ['./fonts/fonts.css']
+        },
+        google: {
+            families: [
+                'Droid Sans',
+                'Six Caps',
+                'Permanent Marker',
+                'Rock Salt',
+                'Sanchez',
+                'Lobster',
+                'Playball',
+                'Anton',
+                'Oswald',
+                'Exo',
+                'Archivo Black',
+                'Paytone One',
+                'Syncopate',
+                'Allerta',
+                'Coda Caption',
+                'Jura'
+            ]
+        }
+    });
+</script>
+<script type="text/javascript">
+    var Kinetic;
+    var Kaption;
+    var focusedKaption;
+    var colorText = true;
+    function adjustMargin() {
+        var h = $('#navbar').height();
+        $('#margin').height(h + 8);
+        console.log(h);
+    }
 
+    $(window).ready(function () {
+        $('#opaSlider').slider({
+            formatter: function (value) {
+                return 'opacity: ' + value;
+            }
+        }).on('slide', changeColor);
+        $('#fontSizeSlider').slider({
+            formatter: function (value) {
+                return 'font size: ' + value;
+            }
+        }).on('slide', setSize);
+        $('#textF').change(function () {
+            colorText = true;
+            $('#opaSlider').slider('setValue', focusedKaption.getOpa() * 255.0);
+            $('option[value=' + focusedKaption.getColor() + ']').attr('selected', 'selected');
+            console.log("text.colorText:" + colorText);
+        });
+        $('#bgF').change(function () {
+            colorText = false;
+            $('#opaSlider').slider('setValue', focusedKaption.getBGOpa() * 255.0);
+            $('option[value=' + focusedKaption.getBGColor() + ']').attr('selected', 'selected');
+            console.log("bg.colorText:" + colorText);
+        });
+        window.onbeforeunload = function () {
+            return "You work will be lost.";
+        };
+        adjustMargin();
 
-    <script>
-        WebFont.load({
-            google: {
-                families: ['Droid Sans', 'Six Caps', 'Permanent Marker', 'Rock Salt', 'Sanchez', 'Lobster', 'Playball', 'Anton', 'Oswald', 'Exo', 'Archivo Black', 'Paytone One', 'Syncopate', 'Allerta', 'Coda Caption', 'Jura']
+        $('#tut').modal('show');
+        $('select[name="colorpicker-glyphicons"]').simplecolorpicker({
+            theme: 'glyphicons'
+        });
+
+        $('#picker_container').hide();
+
+        $("#newText").bind("change paste keyup", function () {
+            var text = $('#newText').val();
+            if (focusedKaption) {
+                focusedKaption.changeText(text);
             }
         });
-    </script>
-    <script type="text/javascript">
-        var Kinetic;
-        var Kaption;
-        var focusedKaption;
-        function adjustMargin() {
-            var h = $('#navbar').height();
-            $('#margin').height(h + 8);
-            console.log(h);
-        }
 
-        $(window).ready(function () {
-            adjustMargin();
-
-            $('#tut').modal('show');
-            $('select[name="colorpicker-glyphicons"]').simplecolorpicker({
-                theme: 'glyphicons'
-            });
-
-            $('#picker_container').hide();
-
-            $("#newText").bind("change paste keyup", function () {
-                var text = $('#newText').val();
-                if (focusedKaption) {
-                    focusedKaption.changeText(text);
+        $('#addText').click(function () {
+            console.log($('#newText').val());
+            Kaption.onAddText({
+                x: 0,
+                y: 0,
+                text: $('#newText').val(),
+                color: '#ffffff',
+                fontSize: 80,
+                bgColor: '#000000',
+                bgOpa: 0.0,
+                font: 'Six Caps',
+                onFocus: function (text) {
+                    console.log("callback: " + text);
+                    $('#newText').val(text.getText());
+                    focusedKaption = text;
                 }
             });
+            $('#newText').val("");
+        });
 
-            $('#addText').click(function () {
-                console.log($('#newText').val());
+        Kaption = new Kaption({
+            container: 'container',
+            width: window.innerWidth,
+            height: window.innerHeight / 4 * 3,
+            boundaryColor: 'yellow',
+            boundaryStrokeWidth: 40,
+            onImageLoaded: function () {
+                $('#loading').hide();
+                console.log(Kaption.getDimention());
                 Kaption.onAddText({
-                    x: 0,
-                    y: 0,
-                    text: $('#newText').val(),
-                    color: 'white',
-                    fontSize: 80,
-                    font: 'Six Caps',
+                    x: Kaption.getDimention().width / 10,
+                    y: Kaption.getDimention().height / 10,
+                    text: "一生どうでしょうします。",
+                    color: '#ffffff',
+                    bgColor: '#000000',
+                    bgOpa: 0.0,
+                    fontSize: 64,
+                    font: 'mgen-heavy',
                     onFocus: function (text) {
                         console.log("callback: " + text);
                         $('#newText').val(text.getText());
                         focusedKaption = text;
                     }
                 });
-            });
-
-            Kaption = new Kaption({
-                container: 'container',
-                width: window.innerWidth,
-                height: window.innerHeight / 4 * 3,
-                boundaryColor: 'yellow',
-                boundaryStrokeWidth: 40,
-                onImageLoaded: function () {
-                    $('#loading').hide();
-                    console.log(Kaption.getDimention());
-                    Kaption.onAddText({
-                        x: Kaption.getDimention().width / 3,
-                        y: Kaption.getDimention().height / 3,
-                        text: "TEXT",
-                        color: 'white',
-                        fontSize: 80,
-                        font: 'Six Caps',
-                        onFocus: function (text) {
-                            console.log("callback: " + text);
-                            $('#newText').val(text.getText());
-                            focusedKaption = text;
-                        }
-                    });
-                }
-            });
-            Kaption.onAddImage("{{url}}");
+            }
         });
+        Kaption.onAddImage("{{url}}");
+    });
 
-        function changeAlign(align) {
-            if (focusedKaption) {
-                focusedKaption.changeAlignment(align);
-            }
+    function changeAlign(align) {
+        if (focusedKaption) {
+            focusedKaption.changeAlignment(align);
         }
+    }
 
-        function changeFont(font) {
-            if (focusedKaption) {
-                focusedKaption.changeFont(font);
-            }
+    function changeFont(font) {
+        if (focusedKaption) {
+            focusedKaption.changeFont(font);
         }
+    }
 
-        function upSize() {
-            if (focusedKaption) {
-                focusedKaption.changeSize(12);
-            }
+    function upSize() {
+        if (focusedKaption) {
+            focusedKaption.changeSize(4);
         }
+    }
 
-        function downSize() {
-            if (focusedKaption) {
-                focusedKaption.changeSize(-12);
-            }
+    function setSize() {
+        var size = $('#fontSizeSlider').val();
+        if (focusedKaption) {
+            focusedKaption.setSize(size);
         }
+    }
 
-        function changeStroke() {
-            if (focusedKaption) {
-                focusedKaption.changeStoke({
-                    width: 4,
-                    color: 'black'
-                });
-            }
+    function downSize() {
+        if (focusedKaption) {
+            focusedKaption.changeSize(-4);
         }
+    }
 
-        function shareKaption() {
-            if (Kaption) {
-                $('#loading').show();
-                Kaption.export(function (url) {
-                    window.open("http://twitter.com/share?text=Kaption&url=" + url, 'share', 'height=320, width=480');
-                    $('#loading').hide();
-                });
-            }
+    function changeStroke() {
+        if (focusedKaption) {
+            focusedKaption.changeStoke({
+                width: 4,
+                color: '#000000'
+            });
         }
+    }
 
-        function removeKaption() {
-            if (focusedKaption) {
-                focusedKaption.remove();
-            }
+    function shareKaption() {
+        if (Kaption) {
+            $('#loading').show();
+            Kaption.export(function (url) {
+                window.open("http://twitter.com/share?text=Kaption&url=" + url, 'share', 'height=320, width=480');
+                $('#loading').hide();
+            });
         }
+    }
 
-        function changeColor() {
-            var color = $('#colorPicker').val();
-            console.log(color);
-            if (focusedKaption) {
-                focusedKaption.changeColor(color);
-            }
+    function removeKaption() {
+        if (focusedKaption) {
+            focusedKaption.remove();
         }
+    }
 
-        function pickColor() {
-            var picker = $('#picker_container');
-            if (picker.is(':visible')) {
-                picker.hide();
+    function changeColor() {
+        var color = $('#colorPicker').val();
+        var opa = $('#opaSlider').val() / 255.0;
+        if (opa == undefined) {
+            opa = 1.0;
+        }
+        console.log(color + ":" + opa);
+        if (focusedKaption) {
+            if (colorText) {
+                focusedKaption.changeColor(color, opa);
             } else {
-                picker.show();
+                focusedKaption.changeBGColor(color, opa);
             }
         }
+    }
 
-    </script>
+    function pickColor() {
+        var picker = $('#picker_container');
+        if (picker.is(':visible')) {
+            picker.hide();
+        } else {
+            picker.show();
+        }
+    }
+
+</script>
 </head>
 <body style="background-image: url('./static_images/trans.png'); background-repeat: repeat;">
 
@@ -194,27 +266,15 @@
                     <!-- Dropdown menu links -->
                     <li><span onclick="changeFont('Anton')" style="font-family: 'Anton'; padding: 8;">Anton</span></li>
                     <li class="divider"></li>
-                    <li><span onclick="changeFont('Oswald')" style="font-family: 'Oswald'; padding: 8;">Oswald</span>
-                    </li>
-                    <li class="divider"></li>
                     <li><span onclick="changeFont('Archivo Black')" style="font-family: 'Archivo Black'; padding: 8;">Archivo Black</span>
                     </li>
-                    <li class="divider"></li>
-                    <li><span onclick="changeFont('Paytone One')" style="font-family: 'Paytone One'; padding: 8;">Paytone One</span>
-                    </li>
-                    <li class="divider"></li>
-                    <li><span onclick="changeFont('Syncopate')"
-                              style="font-family: 'Syncopate'; padding: 8;">Syncopate</span></li>
                     <li class="divider"></li>
                     <li><span onclick="changeFont('Allerta')" style="font-family: 'Allerta'; padding: 8;">Allerta</span>
                     </li>
                     <li class="divider"></li>
-                    <li><span onclick="changeFont('Coda Caption')" style="font-family: 'Coda Caption'; padding: 8;">Coda Caption</span>
-                    </li>
-                    <li class="divider"></li>
                     <li><span onclick="changeFont('Jura')" style="font-family: 'Jura'; padding: 8;">Jura</span></li>
                     <li class="divider"></li>
-                    <li><span onclick="changeFont('Six Caps')"
+                    <li><span onclick="changeFont('SIX CAPS')"
                               style="font-family: 'Six Caps'; padding: 8;">Six Caps</span></li>
                     <li class="divider"></li>
                     <li><span onclick="changeFont('Permanent Marker')"
@@ -223,19 +283,42 @@
                     <li><span onclick="changeFont('Rock Salt')"
                               style="font-family: 'Rock Salt'; padding: 8;">Rock Salt</span></li>
                     <li class="divider"></li>
-                    <li><span onclick="changeFont('Arial')" style="font-family: 'Arial'; padding: 8;">Arial</span></li>
-                    <li class="divider"></li>
                     <li><span onclick="changeFont('Lobster')" style="font-family: 'Lobster'; padding: 8;">Lobster</span>
                     </li>
                     <li class="divider"></li>
                     <li><span onclick="changeFont('Sanchez')" style="font-family: 'Sanches'; padding: 8;">Sanchez</span>
                     </li>
                     <li class="divider"></li>
-                    <li><span onclick="changeFont('Playball')"
-                              style="font-family: 'Playball'; padding: 8;">Playball</span></li>
+                    <li><span onclick="changeFont('kanjyuku')"
+                              style="font-family: 'kanjyuku'; padding: 8;">kanjuku</span></li>
+
+                    <li class="divider"></li>
+                    <li><span onclick="changeFont('nicomoji')"
+                              style="font-family: 'nicomoji'; padding: 8;">nicomoji</span></li>
+
+                    <li class="divider"></li>
+                    <li><span onclick="changeFont('mgen')"
+                              style="font-family: 'mgen'; padding: 8;">無限</span></li>
+                    <li class="divider"></li>
+                    <li><span onclick="changeFont('mgen-heavy')"
+                              style="font-family: 'mgen-heavy'; padding: 8;">無限Heavy</span></li>
+                    <li class="divider"></li>
+                    <li><span onclick="changeFont('honoka')"
+                              style="font-family: 'ほのか'; padding: 8;">ほのか</span></li>
+
+                    <li class="divider"></li>
+                    <li><span onclick="changeFont('sika')"
+                              style="font-family: 'しか'; padding: 8;">しか</span></li>
+
+                    <li class="divider"></li>
+                    <li><span onclick="changeFont('yosimo')"
+                              style="font-family: '行書'; padding: 8;">行書</span></li>
+
                 </ul>
             </div>
-
+            <input id="fontSizeSlider" data-slider-id='ex1Slider' data-slider-width="512" type="text"
+                   data-slider-min="18" data-slider-max="512"
+                   data-slider-step="1" data-slider-value="64"/>
             <button type="button" class="navbar-btn btn btn-success btn-sm" onclick="changeAlign('left')">
                 <span class="glyphicon glyphicon-align-left"></span>
             </button>
@@ -260,7 +343,19 @@
             <button type="button" class="navbar-btn btn btn-danger btn-sm" onclick="removeKaption()">
                 <span class="glyphicon glyphicon-remove"></span>
             </button>
+
             <div class="container" id="picker_container">
+                <div class="radio" checked="checked" id="textF">
+                    <label><input class="label-info
+                    " type="radio" name="optradio" checked="checked">Text</label>
+                </div>
+                <div class="radio" id="bgF">
+                    <label><input class="label-info" type="radio" name="optradio">Background</label>
+                </div>
+                <input id="opaSlider" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="255"
+                       data-slider-step="1" data-slider-value="255" value="255"/>
+
+                <div class="container"></div>
                 <select name="colorpicker-glyphicons" onchange="changeColor()" id="colorPicker">
                     <option value="#ffffff">#ffffff</option>
                     <option value="#000000">#000000</option>
