@@ -68,23 +68,9 @@
 </div>
 <div class="jumbotron" style="height: 100%">
     <div class="container">
-
-        <div class="row">
-            <div class="col-lg-6">
-                <h1>
-                    <span class="text-center" style="font-family: 'Six Caps'; font-size: 256px;">KAPTION</span>
-                </h1>
-
-                <p>
-
-    <span class="text-center" style="font-family: 'Sanchez'; font-size: 40px;">
-        En<span style="font-size: inherit; font-family: 'Permanent Marker'">rich</span> your words.
-    </span>
-                </p>
-            </div>
-            <div class="col-lg-6">
-            </div>
-        </div>
+        <h2 style="text-align: left" id="title">
+            <span class="" style="margin-left: 2%; font-family: 'Six Caps'">KAPTION</span>
+        </h2>
         <div class="container">
             <div class="input-group input-group-lg" style="width:100%">
                 <input type="text" class="form-control" placeholder="Paste Image URL" id="url">
@@ -93,17 +79,12 @@
         <div class="container">
             <output class="form-control" id="list"></output>
         </div>
-
         <input type="file" id="touch_file" style="display: none" onchange="checkAndUpload(this.files[0]);">
 
         <div class="container">
-
-            <div class="jumbotron">
-                <h2 style="text-align: center" id="drop_zone">
-                    <span id="note" style="font-family: 'Sanchez';">Drop or Choose</span>
-                    <span class="glyphicon glyphicon-file" onclick="$('#touch_file').click();"></span>
-                </h2>
-            </div>
+            <h1 style="text-align: center" id="drop_zone">
+                <span class="glyphicon glyphicon-file" onclick="$('#touch_file').click();"></span>
+            </h1>
         </div>
         <script>
             var file;
