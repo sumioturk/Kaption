@@ -143,7 +143,7 @@
                 Kaption.onAddText({
                     x: Kaption.getDimention().width / 10,
                     y: Kaption.getDimention().height / 10,
-                    text: "一生どうでしょうします。",
+                    text: "一生\nどうでしょう\nします。",
                     color: '#ffffff',
                     bgColor: '#000000',
                     bgOpa: 0.0,
@@ -264,56 +264,55 @@
                 </button>
                 <ul class="dropdown-menu">
                     <!-- Dropdown menu links -->
-                    <li><span onclick="changeFont('Anton')" style="font-family: 'Anton'; padding: 8;">Anton</span></li>
+                    <li><span onclick="changeFont('Anton')" style="font-family: 'Anton'; padding: 2;">Anton</span></li>
                     <li class="divider"></li>
-                    <li><span onclick="changeFont('Archivo Black')" style="font-family: 'Archivo Black'; padding: 8;">Archivo Black</span>
+                    <li><span onclick="changeFont('Archivo Black')" style="font-family: 'Archivo Black'; padding: 2;">Archivo Black</span>
                     </li>
                     <li class="divider"></li>
-                    <li><span onclick="changeFont('Allerta')" style="font-family: 'Allerta'; padding: 8;">Allerta</span>
+                    <li><span onclick="changeFont('Allerta')" style="font-family: 'Allerta'; padding: 2;">Allerta</span>
                     </li>
                     <li class="divider"></li>
-                    <li><span onclick="changeFont('Jura')" style="font-family: 'Jura'; padding: 8;">Jura</span></li>
+                    <li><span onclick="changeFont('Jura')" style="font-family: 'Jura'; padding: 2;">Jura</span></li>
                     <li class="divider"></li>
                     <li><span onclick="changeFont('SIX CAPS')"
-                              style="font-family: 'Six Caps'; padding: 8;">Six Caps</span></li>
+                              style="font-family: 'Six Caps'; padding: 2;">Six Caps</span></li>
                     <li class="divider"></li>
                     <li><span onclick="changeFont('Permanent Marker')"
-                              style="font-family: 'Permanent Marker'; padding: 8;">Permanent Marker</span></li>
+                              style="font-family: 'Permanent Marker'; padding: 2;">Permanent Marker</span></li>
                     <li class="divider"></li>
                     <li><span onclick="changeFont('Rock Salt')"
-                              style="font-family: 'Rock Salt'; padding: 8;">Rock Salt</span></li>
+                              style="font-family: 'Rock Salt'; padding: 2;">Rock Salt</span></li>
                     <li class="divider"></li>
-                    <li><span onclick="changeFont('Lobster')" style="font-family: 'Lobster'; padding: 8;">Lobster</span>
+                    <li><span onclick="changeFont('Lobster')" style="font-family: 'Lobster'; padding: 2;">Lobster</span>
                     </li>
                     <li class="divider"></li>
-                    <li><span onclick="changeFont('Sanchez')" style="font-family: 'Sanches'; padding: 8;">Sanchez</span>
+                    <li><span onclick="changeFont('Sanchez')" style="font-family: 'Sanches'; padding: 2;">Sanchez</span>
                     </li>
                     <li class="divider"></li>
                     <li><span onclick="changeFont('kanjyuku')"
-                              style="font-family: 'kanjyuku'; padding: 8;">kanjuku</span></li>
+                              style="font-family: 'kanjyuku'; padding: 2;">kanjuku</span></li>
 
                     <li class="divider"></li>
                     <li><span onclick="changeFont('nicomoji')"
-                              style="font-family: 'nicomoji'; padding: 8;">nicomoji</span></li>
+                              style="font-family: 'nicomoji'; padding: 2;">nicomoji</span></li>
 
                     <li class="divider"></li>
                     <li><span onclick="changeFont('mgen')"
-                              style="font-family: 'mgen'; padding: 8;">無限</span></li>
+                              style="font-family: 'mgen'; padding: 2;">無限</span></li>
                     <li class="divider"></li>
                     <li><span onclick="changeFont('mgen-heavy')"
-                              style="font-family: 'mgen-heavy'; padding: 8;">無限Heavy</span></li>
+                              style="font-family: 'mgen-heavy'; padding: 2;">無限Heavy</span></li>
                     <li class="divider"></li>
                     <li><span onclick="changeFont('honoka')"
-                              style="font-family: 'ほのか'; padding: 8;">ほのか</span></li>
+                              style="font-family: 'ほのか'; padding: 2;">ほのか</span></li>
 
                     <li class="divider"></li>
                     <li><span onclick="changeFont('sika')"
-                              style="font-family: 'しか'; padding: 8;">しか</span></li>
+                              style="font-family: 'しか'; padding: 2;">しか</span></li>
 
                     <li class="divider"></li>
                     <li><span onclick="changeFont('yosimo')"
-                              style="font-family: '行書'; padding: 8;">行書</span></li>
-
+                              style="font-family: '行書'; padding: 2;">行書</span></li>
                 </ul>
             </div>
             <input id="fontSizeSlider" data-slider-id='ex1Slider' data-slider-width="512" type="text"
@@ -387,7 +386,7 @@
             </div>
             <div class="input-group input-group-md">
                 <span class="input-group-addon glyphicon-plus" id="addText"></span>
-                <input type="text" class="form-control" placeholder="Text" id="newText">
+                <textarea type="text" class="form-control" placeholder="Text" id="newText"></textarea>
             </div>
 
         </div>
