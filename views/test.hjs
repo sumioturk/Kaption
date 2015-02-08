@@ -204,7 +204,7 @@
         if (Kaption) {
             $('#loading').show();
             Kaption.export(function (url) {
-                window.open("http://twitter.com/share?text=Kaption&url=" + url, 'share', 'height=320, width=480');
+                window.open(url, 'share', 'height=320, width=480');
                 $('#loading').hide();
             });
         }
